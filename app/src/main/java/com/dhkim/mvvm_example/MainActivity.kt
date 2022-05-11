@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
         observeData()
         userViewModel.fetchData()
 
+
         //commit 2
+
 
     }
 
