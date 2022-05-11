@@ -24,10 +24,11 @@ class MainActivity : AppCompatActivity() {
         userViewModel.fetchData()
 
 
+        //commit7 kdh777777
+
+
         //commit 2
-        //commit 3 kdh
-        //commit 4 kdh444
-        //commit 6 kdh666
+
 
 
     }
