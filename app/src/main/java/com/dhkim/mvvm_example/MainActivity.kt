@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         observeData()
         userViewModel.fetchData()
 
-        //commit 1
+        //commit 2
 
     }
 
