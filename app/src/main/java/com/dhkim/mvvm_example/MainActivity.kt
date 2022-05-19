@@ -3,17 +3,24 @@ package com.dhkim.mvvm_example
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dhkim.mvvm_example.databinding.ActivityMainBinding
+import dagger.Provides
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import org.jetbrains.annotations.Contract
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UserContract.View {
 
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val userViewModel by viewModels<UserViewModel>()
+//    private val userViewModel by viewModels<UserViewModel>()
     private val userAdapter by lazy { UserAdapter() }
 
+    @Inject
+    lateinit var presenter: UserContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +28,22 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
 
-        observeData()
-        userViewModel.fetchData()
+        //observeData()
 
-        //commit88888 kdh8888
 
-        //commit 2
+        //userViewModel.fetchData()
+
+
+        fetchData()
+
+
+    }
+
+
+    private fun fetchData() {
+        lifecycleScope.launch {
+            presenter.getUsers()
+        }
 
 
     }
@@ -39,8 +56,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        userViewModel.users.observe(this){
+       /* userViewModel.users.observe(this){
             userAdapter.submitList(it)
+        }*/
+    }
+
+    override suspend fun showUsers(users: List<User>) {
+        lifecycleScope.launch {
+            userAdapter.submitList(users)
         }
     }
 }
