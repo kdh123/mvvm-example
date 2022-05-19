@@ -30,17 +30,21 @@ class MainActivity : AppCompatActivity(), UserContract.View {
 
         //observeData()
 
+
         //userViewModel.fetchData()
 
 
         fetchData()
 
+
     }
+
 
     private fun fetchData() {
         lifecycleScope.launch {
             presenter.getUsers()
         }
+
 
     }
 
