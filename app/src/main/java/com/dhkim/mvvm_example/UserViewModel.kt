@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserViewModel : ViewModel() {
+@HiltViewModel
+class UserViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val _users : MutableLiveData<List<User>> = MutableLiveData()
     val users : LiveData<List<User>> = _users
@@ -15,7 +18,7 @@ class UserViewModel : ViewModel() {
 
         viewModelScope.launch {
 
-            _users.value = service.getUsers().body()
+            _users.value = repository.getUsers()
 
         }
 
